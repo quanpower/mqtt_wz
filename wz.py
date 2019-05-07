@@ -82,7 +82,7 @@ def on_message(mqttc, obj, msg):
     print(json.loads(msg.payload))
     electricCurrentValue = json.loads(msg.payload)["device"][0]["variable"]["40087"]
     print(electricCurrentValue)
-    payload_dict = {"equipmentBzid":'DJYMJ002',"electricCurrentValue":electricCurrentValue}
+    payload_dict = {"equipmentBzid":'DJYMJ002',"electricCurrentValue":'12'}
     payload = json.dumps(payload_dict)
     print(payload)
     mes_post(payload)
@@ -95,7 +95,7 @@ def on_exec(strcmd):
 def mes_post(payload):
     print('----post_begin-----')
     url = "http://47.111.27.67:615/api/rmes/v1/iot/sendElectricCurrentData"
-    res =requests.post(url,data=payload)
+    res =requests.post(url, data=payload)
     print('----------post_text-----------')
     print(res.text)
 
