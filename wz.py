@@ -77,8 +77,8 @@ def on_message(mqttc, obj, msg):
     print(msg.payload)
 
     result = re.findall(".*wzdx/(.*)/data.*", topic_string)
-    print(result)
     equipmentBzid = result[0]
+    print(equipmentBzid)
     electricCurrentValue = json.loads(msg.payload)["variable"]["40087"]
     print(electricCurrentValue)
     payload_dict = {"equipmentBzid":equipmentBzid,"electricCurrentValue":electricCurrentValue}
