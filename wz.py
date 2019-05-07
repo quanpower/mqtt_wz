@@ -82,7 +82,7 @@ def on_message(mqttc, obj, msg):
     print(json.loads(msg.payload))
     electricCurrentValue = json.loads(msg.payload)["device"][0]["variable"]["40087"]
     print(electricCurrentValue)
-    payload_dict = {"equipmentBzid":equipmentBzid,"electricCurrentValue":electricCurrentValue}
+    payload_dict = {"equipmentBzid":'DJYMJ002',"electricCurrentValue":electricCurrentValue}
     payload = json.dumps(payload_dict)
     print(payload)
     mes_post(payload)
