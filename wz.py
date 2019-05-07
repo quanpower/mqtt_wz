@@ -6,8 +6,9 @@ import socket, sys
 import struct
 import binascii
 import logging
-
-
+import requests
+import json
+import re
 
 # 第一步，创建一个logger  
 logger = logging.getLogger()  
@@ -69,31 +70,37 @@ def on_message(mqttc, obj, msg):
     strcurtime = curtime.strftime("%Y-%m-%d %H:%M:%S")
     logger.info(strcurtime + ": " + msg.topic+" "+str(msg.qos)+" "+str(msg.payload))  
 
-    print('-----------------receive time----------------------')
-    print(datetime.datetime.now())
+    print('-----------------receive new data----------------------')
 
-    payload_length = len(msg.payload)
-    print('-------payload_length---------')
+    topic_string = msg.topic
+    print(topic_string)
     print(msg.payload)
-    print(payload_length)
-    un_int = struct.unpack(str(payload_length) + 'B', msg.payload)
-    print(un_int)
-    uints = list(un_int)
-    print(uints)
 
+    result = re.findall(".*wzdx/(.*)/data.*", topic_string)
+    print(result)
+    equipmentBzid = '11'
+    electricCurrentValue = json.loads(msg.payload)["variable"]["40087"]
+    payload_dict = {"equipmentBzid":equipmentBzid,"electricCurrentValue":electricCurrentValue}
+    payload = json.dumps(payload_dict)
+    mes_post(payload)
 
 
 def on_exec(strcmd):
     logger.debug("Exec:", strcmd)
     strExec = strcmd
 
+def mes_post(payload):
+    url = "http://47.111.27.67:615/api/rmes/v1/iot/sendElectricCurrentData"
+    res =requests.post(url,data=payload)
+    print('----------post_text-----------')
+    print(res.text)
 
 
 
 #=====================================================
 def mqtt_passthrough_sub():
 
-    mqttc = mqtt.Client("stm32.00000001.upstream.passthrough_subscriber")
+    mqttc = mqtt.Client("wzdx_subscriber")
     mqttc.username_pw_set("iiot", "smartlinkcloud")
     mqttc.on_message = on_message
     mqttc.on_connect = on_connect
