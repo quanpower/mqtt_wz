@@ -106,7 +106,7 @@ def mqtt_passthrough_sub():
 
     mqttc.connect(strBroker, 1883, 60)
     # mqttc.subscribe("stm32.00000001.upstream.passthrough", 0)
-    mqttc.subscribe("wzdx.#", 0)
+    mqttc.subscribe("wzdx.47316019030A908.data", 0)
     mqttc.loop_forever()
 
 if __name__ == '__main__':
