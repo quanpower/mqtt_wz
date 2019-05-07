@@ -78,10 +78,12 @@ def on_message(mqttc, obj, msg):
 
     result = re.findall(".*wzdx/(.*)/data.*", topic_string)
     print(result)
-    equipmentBzid = '11'
+    equipmentBzid = result[0]
     electricCurrentValue = json.loads(msg.payload)["variable"]["40087"]
+    print(electricCurrentValue)
     payload_dict = {"equipmentBzid":equipmentBzid,"electricCurrentValue":electricCurrentValue}
     payload = json.dumps(payload_dict)
+    print(payload)
     mes_post(payload)
 
 
@@ -90,6 +92,7 @@ def on_exec(strcmd):
     strExec = strcmd
 
 def mes_post(payload):
+    print('----post_begin-----')
     url = "http://47.111.27.67:615/api/rmes/v1/iot/sendElectricCurrentData"
     res =requests.post(url,data=payload)
     print('----------post_text-----------')
