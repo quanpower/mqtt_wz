@@ -71,7 +71,7 @@ def on_message(mqttc, obj, msg):
     logger.info(strcurtime + ": " + msg.topic+" "+str(msg.qos)+" "+str(msg.payload))  
 
     print('-----------------receive new data----------------------')
-
+    print('current_time:', strcurtime)
     topic_string = msg.topic
     print(topic_string)
     print(msg.payload)
