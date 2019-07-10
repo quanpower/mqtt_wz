@@ -95,10 +95,12 @@ def on_exec(strcmd):
 def mes_post(payload):
     print('----post_begin-----')
     url = "http://47.111.27.67:615/api/rmes/v1/iot/sendElectricCurrentData"
-    res =requests.post(url, data=payload)
-    print('----------post_text-----------')
-    print(res.text)
-
+    try:
+        res =requests.post(url, data=payload,timeout=(5, 5))
+        print('----------post_text-----------')
+        print(res.text)
+    except Exception as e:
+        print(e)
 
 
 #=====================================================
