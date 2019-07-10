@@ -94,9 +94,10 @@ def on_exec(strcmd):
 
 def mes_post(payload):
     print('----post_begin-----')
+    # url = "http://47.111.27.67:615/api/rmes/v1/iot/sendElectricCurrentData"
     url = "http://47.111.27.67:615/api/rmes/v1/iot/sendElectricCurrentData"
     try:
-        res =requests.post(url, data=payload,timeout=(5, 5))
+        res =requests.post(url, data=payload,timeout=(1, 2))
         print('----------post_text-----------')
         print(res.text)
     except Exception as e:
@@ -106,7 +107,7 @@ def mes_post(payload):
 #=====================================================
 def mqtt_passthrough_sub():
 
-    mqttc = mqtt.Client("wzdx_subscriber")
+    mqttc = mqtt.Client("wzdx_subscriber1")
     mqttc.username_pw_set("iiot", "smartlinkcloud")
     mqttc.on_message = on_message
     mqttc.on_connect = on_connect
