@@ -97,7 +97,7 @@ def mes_post(payload):
     # url = "http://47.111.27.67:615/api/rmes/v1/iot/sendElectricCurrentData"
     url = "http://47.111.27.67:615/api/rmes/v1/iot/sendElectricCurrentData"
     try:
-        res =requests.post(url, data=payload,timeout=(1, 2))
+        res =requests.post(url, data=payload,timeout=(0.5, 0.5))
         print('----------post_text-----------')
         print(res.text)
     except Exception as e:
